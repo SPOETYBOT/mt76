@@ -413,6 +413,7 @@ mt76_check_sband(struct mt76_phy *phy, struct mt76_sband *msband,
 	if (found) {
 		phy->chandef.chan = &sband->channels[0];
 		phy->chan_state = &msband->chan[0];
+		phy->dev->band_phys[band] = phy;
 		return;
 	}
 
@@ -973,6 +974,8 @@ int mt76_update_channel(struct mt76_phy *phy)
 	struct ieee80211_hw *hw = phy->hw;
 	struct cfg80211_chan_def *chandef = &hw->conf.chandef;
 	bool offchannel = hw->conf.flags & IEEE80211_CONF_OFFCHANNEL;
+
+	phy->radar_enabled = hw->conf.radar_enabled;
 
 	return mt76_set_channel(phy, chandef, offchannel);
 }
@@ -1899,7 +1902,7 @@ enum mt76_dfs_state mt76_phy_dfs_state(struct mt76_phy *phy)
 	    test_bit(MT76_SCANNING, &phy->state))
 		return MT_DFS_STATE_DISABLED;
 
-	if (!hw->conf.radar_enabled) {
+	if (!phy->radar_enabled) {
 		if ((hw->conf.flags & IEEE80211_CONF_MONITOR) &&
 		    (phy->chandef.chan->flags & IEEE80211_CHAN_RADAR))
 			return MT_DFS_STATE_ACTIVE;
