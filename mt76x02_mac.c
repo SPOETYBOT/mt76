@@ -5,19 +5,11 @@
  */
 
 #include "mt76x02.h"
-#include "mt76x02_trace.h"
-#include "trace.h"
-
 void mt76x02_mac_reset_counters(struct mt76x02_dev *dev)
 {
 	int i;
 
 	mt76_rr(dev, MT_RX_STAT_0);
-	mt76_rr(dev, MT_RX_STAT_1);
-	mt76_rr(dev, MT_RX_STAT_2);
-	mt76_rr(dev, MT_TX_STA_0);
-	mt76_rr(dev, MT_TX_STA_1);
-	mt76_rr(dev, MT_TX_STA_2);
 
 	for (i = 0; i < 16; i++)
 		mt76_rr(dev, MT_TX_AGG_CNT(i));
