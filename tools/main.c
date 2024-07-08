@@ -5,14 +5,10 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <arpa/inet.h>
-#include <netinet/in.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <errno.h>
 #include <poll.h>
-#include <fcntl.h>
-#include <signal.h>
 #include "mt76-test.h"
 
 struct unl unl;
@@ -176,14 +172,14 @@ int main(int argc, char **argv)
 
 	if (unl_genl_init(&unl, "nl80211") < 0) {
 		fprintf(stderr, "Failed to connect to nl80211\n");
-		return 2;
+		return -2;
 	}
 
 	phyname = argv[1];
 	phy = phy_lookup_idx(phyname);
 	if (phy < 0) {
 		fprintf(stderr, "Could not find phy '%s'\n", argv[1]);
-		return 2;
+		return -2;
 	}
 
 	cmd = argv[2];
