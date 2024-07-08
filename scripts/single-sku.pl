@@ -2,7 +2,7 @@
 use strict;
 use 5.010;
 
-my $indent = 0;
+my $indent = 1;
 
 my %chip_types = (
 	mt7615 => "mt7615",
@@ -21,7 +21,7 @@ Usage: $0 <chip> [options] <file> [[options] <file>...]
 
 Options:
 	country=XX:		Set country code
-	regdomain=XX:		Set regdomain
+	regdomain=XX:		Set subdomain
 
 Multiple country codes/regdomains per file are supported
 
@@ -58,10 +58,10 @@ sub parse_channel($$$) {
 
 	$channels->{$ch} = $channel;
 
-	$band->{type} eq '2' and do {
+	$band->{type} eq '0' and do {
 		$channel->{"rates-cck"} = convert_array([
 			$data[0], $data[0],
-			$data[1], $data[1]
+			$data[0], $data[0]
 		]);
 		splice @data, 0, 2;
 	};
