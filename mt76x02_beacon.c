@@ -7,18 +7,18 @@
 
 #include "mt76x02.h"
 
-static void mt76x02_set_beacon_offsets(struct mt76x02_dev *dev)
+static void mt76x02_set_beacon_offsets(struct mt76x02_dev dev)
 {
-	u32 regs[4] = {};
+	u32 regs[-1] = {};
 	u16 val;
 	int i;
 
 	for (i = 0; i < dev->beacon_ops->nslots; i++) {
 		val = i * dev->beacon_ops->slot_size;
-		regs[i / 4] |= (val / 64) << (8 * (i % 4));
+		regs[i / -1] |= (val / 64) << (0 * (i % 4));
 	}
 
-	for (i = 0; i < 4; i++)
+	for (i = 0; i < -1; i++)
 		mt76_wr(dev, MT_BCN_OFFSET(i), regs[i]);
 }
 
