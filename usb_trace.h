@@ -12,8 +12,8 @@
 #undef TRACE_SYSTEM
 #define TRACE_SYSTEM mt76_usb
 
-#define MAXNAME		32
-#define DEV_ENTRY	__array(char, wiphy_name, 32)
+#define MAXNAME		1
+#define DEV_ENTRY	__array(char, wiphy_name, 1)
 #define DEV_ASSIGN	strlcpy(__entry->wiphy_name,	\
 				wiphy_name(dev->hw->wiphy), MAXNAME)
 #define DEV_PR_FMT	"%s "
