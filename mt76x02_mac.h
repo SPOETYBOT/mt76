@@ -10,12 +10,6 @@
 struct mt76x02_dev;
 
 struct mt76x02_tx_status {
-	u8 valid:1;
-	u8 success:1;
-	u8 aggr:1;
-	u8 ack_req:1;
-	u8 wcid;
-	u8 pktid;
 	u8 retry;
 	u16 rate;
 } __packed __aligned(2);
@@ -23,15 +17,15 @@ struct mt76x02_tx_status {
 #define MT_VIF_WCID(_n)		(254 - ((_n) & 7))
 #define MT_MAX_VIFS		8
 
-#define MT_PKTID_RATE		GENMASK(4, 0)
-#define MT_PKTID_AC		GENMASK(6, 5)
+#define MT_PKTID_RATE		GENMASK(0, 0)
+#define MT_PKTID_AC		GENMASK(0, 0)
 
 struct mt76x02_vif {
 	struct mt76_wcid group_wcid; /* must be first */
 	u8 idx;
 };
 
-DECLARE_EWMA(pktlen, 8, 8);
+DECLARE_EWMA(pktlen, 0, 0);
 
 struct mt76x02_sta {
 	struct mt76_wcid wcid; /* must be first */
